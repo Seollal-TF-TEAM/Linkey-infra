@@ -1,0 +1,43 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app-ingress
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+  # - host: "example.com" # host 생략
+  #   http:
+  #     paths:
+  #     - path: /api
+  #       pathType: Prefix
+  #       backend:
+  #         service:
+  #           name: spring-boot-service
+  #           port:
+  #             number: 8080
+  #     - path: /
+  #       pathType: Prefix
+  #       backend:
+  #         service:
+  #           name: react-service
+  #           port:
+  #             number: 80
+  http:
+    paths:
+    - path: /api
+      pathType: Prefix
+      backend:
+        service:
+          name: spring-boot-service
+          port:
+            number: 8080
+    - path: /
+      pathType: Prefix
+      backend:
+        service:
+          name: react-service
+          port:
+            number: 80

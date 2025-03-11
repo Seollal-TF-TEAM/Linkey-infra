@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-deployment
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: react
+  template:
+    metadata:
+      labels:
+        app: react
+    spec:
+      containers:
+      - name: react
+        image: nginx:alpine
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: "0.5"
+            memory: "512Mi"
+          requests:
+            cpu: "0.2"
+            memory: "256Mi"

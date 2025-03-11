@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-boot-deployment
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-boot
+  template:
+    metadata:
+      labels:
+        app: spring-boot
+    spec:
+      containers:
+      - name: spring-boot
+        image: springio/gs-spring-boot-docker:latest
+        ports:
+        - containerPort: 8080
+        envFrom:
+        - configMapRef:
+            name: spring-boot-config
+        resources:
+          limits:
+            cpu: "1"
+            memory: "1Gi"
+          requests:
+            cpu: "0.5"
+            memory: "512Mi"
