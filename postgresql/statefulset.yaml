@@ -14,6 +14,8 @@ spec:
       labels:
         app: postgresql
     spec:
+      nodeSelector:
+        db-node: "true"
       containers:
       - name: postgresql
         image: postgres:latest
@@ -21,18 +23,29 @@ spec:
         - containerPort: 5432
         env:
         - name: POSTGRES_USER
-          value: "admin"
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: username
         - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef:
               name: postgres-secret
               key: password
         - name: POSTGRES_DB
-          value: "mydb"
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: dbname
         volumeMounts:
         - name: postgres-data
           mountPath: /var/lib/postgresql/data
+        - name: init-sql
+          mountPath: /docker-entrypoint-initdb.d
       volumes:
       - name: postgres-data
         persistentVolumeClaim:
           claimName: postgres-pvc
+      - name: init-sql
+        configMap:
+          name: postgres-config
