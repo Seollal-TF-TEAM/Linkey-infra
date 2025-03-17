@@ -20,12 +20,14 @@ spec:
         image: nahongc/spring-boot-app:latest
         ports:
         - containerPort: 8080
-        envFrom:
-        - configMapRef:
-            name: spring-boot-config
-        - secretRef:
-            name: postgresql-secret
         env:
+        - name: SPRING_DATASOURCE_URL
+          value: "jdbc:postgresql://postgres-service:5432/$(POSTGRES_DB)"
+        - name: POSTGRES_DB
+          valueFrom:
+            configMapKeyRef:
+              name: postgresql-secret
+              key: dbname
         - name: SPRING_DATASOURCE_USERNAME
           valueFrom:
             secretKeyRef:
