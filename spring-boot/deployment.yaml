@@ -13,7 +13,7 @@ spec:
       labels:
         app: spring-boot
     spec:
-      nodeSelectozr:
+      nodeSelector:
         app-node: "true"
       containers:
       - name: spring-boot

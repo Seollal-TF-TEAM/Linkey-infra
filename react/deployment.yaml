@@ -13,9 +13,11 @@ spec:
       labels:
         app: react
     spec:
+      nodeSelector:
+        app-node: "true"
       containers:
       - name: react
-        image: nginx:alpine
+        image: ghcr.io/burakkaygusuz/react-nginx-example:latest
         ports:
         - containerPort: 80
         resources:
