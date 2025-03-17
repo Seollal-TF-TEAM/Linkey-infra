@@ -22,7 +22,7 @@ spec:
         - containerPort: 8080
         env:
         - name: SPRING_DATASOURCE_URL
-          value: "jdbc:postgresql://postgres-service:5432/$(POSTGRES_DB)"
+          value: "jdbc:postgresql://postgresql-service:5432/$(POSTGRES_DB)"
         - name: POSTGRES_DB
           valueFrom:
             secretKeyRef:
