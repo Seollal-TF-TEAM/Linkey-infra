@@ -21,6 +21,19 @@ spec:
         envFrom:
         - configMapRef:
             name: spring-boot-config
+        - secretRef:
+            name: postgres-secret
+        env:
+        - name: SPRING_DATASOURCE_USERNAME
+          valueFrom:
+            secretKeyRef:
+                name: postgres-secret
+                key: username
+        - name: SPRING_DATASOURCE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: password
         resources:
           limits:
             cpu: "1"
