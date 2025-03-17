@@ -4,7 +4,7 @@ metadata:
   name: postgresql
   namespace: default
 spec:
-  serviceName: postgresql
+  serviceName: postgresql-service
   replicas: 1
   selector:
     matchLabels:
@@ -14,9 +14,20 @@ spec:
       labels:
         app: postgresql
     spec:
+      nodeSelector:
+        db-node: "true"
+      initContainers:
+      - name: init-db
+        image: postgres:latest
+        command: ["sh", "-c", "psql -U $POSTGRES_USER -d $POSTGRES_DB -f /docker-entrypoint-initdb.d/init.sql"]
+        volumeMounts:
+        - name: init-sql
+          mountPath: /docker-entrypoint-initdb.d
       containers:
       - name: postgresql
         image: postgres:latest
+        ports:
+        - containerPort: 5432
         env:
         - name: POSTGRES_USER
           valueFrom:
@@ -33,25 +44,15 @@ spec:
             secretKeyRef:
               name: postgres-secret
               key: dbname
-        ports:
-        - containerPort: 5432
         volumeMounts:
         - name: postgres-data
           mountPath: /var/lib/postgresql/data
-      initContainers:
-      - name: init-db
-        image: postgres:latest
-        command: ["sh", "-c", "psql -U $POSTGRES_USER -d $POSTGRES_DB -f /docker-entrypoint-initdb.d/init.sql"]
-        volumeMounts:
-        - name: init-db
+        - name: init-sql
           mountPath: /docker-entrypoint-initdb.d
       volumes:
-      - name: init-db
-        configMap:
-          name: postgres-config
-          items:
-          - key: init.sql
-            path: init.sql
       - name: postgres-data
         persistentVolumeClaim:
           claimName: postgresql-pvc
+      - name: init-sql
+        configMap:
+          name: postgres-config
