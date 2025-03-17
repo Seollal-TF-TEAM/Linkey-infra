@@ -13,6 +13,8 @@ spec:
       labels:
         app: spring-boot
     spec:
+      nodeSelectozr:
+        app-node: "true"
       containers:
       - name: spring-boot
         image: springio/gs-spring-boot-docker:latest
@@ -22,17 +24,17 @@ spec:
         - configMapRef:
             name: spring-boot-config
         - secretRef:
-            name: postgres-secret
+            name: postgresql-secret
         env:
         - name: SPRING_DATASOURCE_USERNAME
           valueFrom:
             secretKeyRef:
-                name: postgres-secret
+                name: postgresql-secret
                 key: username
         - name: SPRING_DATASOURCE_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: postgres-secret
+              name: postgresql-secret
               key: password
         resources:
           limits:
