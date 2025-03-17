@@ -32,17 +32,17 @@ spec:
         - name: POSTGRES_USER
           valueFrom:
             secretKeyRef:
-              name: postgres-secret
+              name: postgresql-secret
               key: username
         - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: postgres-secret
+              name: postgresql-secret
               key: password
         - name: POSTGRES_DB
           valueFrom:
             secretKeyRef:
-              name: postgres-secret
+              name: postgresql-secret
               key: dbname
         volumeMounts:
         - name: postgres-data
@@ -55,4 +55,4 @@ spec:
           claimName: postgresql-pvc
       - name: init-sql
         configMap:
-          name: postgres-config
+          name: postgresql-config
