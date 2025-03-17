@@ -16,13 +16,6 @@ spec:
     spec:
       nodeSelector:
         db-node: "true"
-      initContainers:
-      - name: init-db
-        image: postgres:latest
-        command: ["sh", "-c", "psql -U $POSTGRES_USER -d $POSTGRES_DB -f /docker-entrypoint-initdb.d/init.sql"]
-        volumeMounts:
-        - name: init-sql
-          mountPath: /docker-entrypoint-initdb.d
       containers:
       - name: postgresql
         image: postgres:latest
