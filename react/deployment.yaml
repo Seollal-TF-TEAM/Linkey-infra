@@ -17,7 +17,7 @@ spec:
         app-node: "true"
       containers:
       - name: react
-        image: ghcr.io/burakkaygusuz/react-nginx-example:latest
+        image: nahongc/react-app:latest
         ports:
         - containerPort: 80
         resources:
