@@ -79,6 +79,19 @@ data:
         FOREIGN KEY (todo_id) REFERENCES todos(todo_id) ON DELETE CASCADE
     );
 
+    CREATE TABLE images (
+        image_id BIGINT PRIMARY KEY,
+        image_url VARCHAR(256),
+        image_path VARCHAR(512) NOT NULL,
+        project_id INT,
+        sprint_id BIGINT,
+        file_size BIGINT NOT NULL,
+        file_type VARCHAR(50) NOT NULL,
+        created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (project_id) REFERENCES projects(project_id),
+        FOREIGN KEY (sprint_id) REFERENCES sprints(sprint_id)
+    );
+
     -- Sequence
 
     -- team_members
@@ -128,3 +141,11 @@ data:
     ALTER COLUMN commit_id SET DEFAULT nextval('commits_commit_id_seq');
 
     ALTER SEQUENCE commits_commit_id_seq OWNED BY commits.commit_id;
+
+    -- images
+    CREATE SEQUENCE images_image_id_seq START 1;
+
+    ALTER TABLE images
+    ALTER COLUMN image_id SET DEFAULT nextval('images_image_id_seq');
+
+    ALTER SEQUENCE images_image_id_seq OWNED BY images.image_id;
