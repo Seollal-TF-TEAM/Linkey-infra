@@ -13,14 +13,28 @@ spec:
       labels:
         app: nginx-ingress
     spec:
+      serviceAccountName: ingress-nginx  # ServiceAccount 연결
       containers:
       - name: controller
         image: k8s.gcr.io/ingress-nginx/controller:v1.8.1
         args:
         - /nginx-ingress-controller
         - --ingress-class=nginx
+        - --controller-class=k8s.io/ingress-nginx
+        - --election-id=ingress-controller-leader
+        - --configmap=$(POD_NAMESPACE)/ingress-nginx-controller
+        - --publish-service=$(POD_NAMESPACE)/nginx-ingress-service
         ports:
         - containerPort: 80
+        env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
         resources:
           limits:
             cpu: "0.5"

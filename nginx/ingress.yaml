@@ -4,37 +4,21 @@ metadata:
   name: app-ingress
   namespace: default
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   ingressClassName: nginx
   rules:
-  # - host: "example.com" # host 생략
-  #   http:
-  #     paths:
-  #     - path: /api
-  #       pathType: Prefix
-  #       backend:
-  #         service:
-  #           name: spring-boot-service
-  #           port:
-  #             number: 8080
-  #     - path: /
-  #       pathType: Prefix
-  #       backend:
-  #         service:
-  #           name: react-service
-  #           port:
-  #             number: 80
-    - http:
+  - http:
       paths:
-      - path: /api
+      - path: /api(/|$)(.*)
         pathType: Prefix
         backend:
           service:
             name: spring-boot-service
             port:
               number: 8080
-      - path: /
+      - path: /(.*)
         pathType: Prefix
         backend:
           service:
