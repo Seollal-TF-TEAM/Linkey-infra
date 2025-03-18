@@ -3,8 +3,6 @@ kind: Deployment
 metadata:
   name: redis
   namespace: default
-  labels:
-    app: redis
 spec:
   replicas: 1
   selector:
@@ -19,27 +17,6 @@ spec:
         db-node: "true"
       containers:
       - name: redis
-        image: redis:7.0
+        image: redis:latest
         ports:
         - containerPort: 6379
-        env:
-        - name: REDIS_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: redis-secret
-              key: redis-password
-        command: ["redis-server", "/data/redis.conf"]
-        volumeMounts:
-        - name: redis-config
-          mountPath: /data/redis.conf
-          subPath: redis.conf
-        - name: redis-acl
-          mountPath: /data/users.acl
-          subPath: users.acl
-      volumes:
-      - name: redis-config
-        configMap:
-          name: redis-config
-      - name: redis-acl
-        secret:
-          secretName: redis-acl
