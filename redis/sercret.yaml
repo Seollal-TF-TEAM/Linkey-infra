@@ -5,4 +5,4 @@ metadata:
   namespace: default
 type: Opaque
 data:
-  redis-password: bGlua2V5YWRtaW4xMiE=  # "linkeyadmin12!"의 base64 인코딩 값
+  redis-password: bGlua2V5YWRtaW4xMiE=  # "linkeyadmin12!"의 인코딩 값
