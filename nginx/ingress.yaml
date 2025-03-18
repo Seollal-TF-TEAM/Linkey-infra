@@ -1,14 +1,14 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ingress
+  name: nginx-ingress
   namespace: default
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
-  ingressClassName: nginx  # Ingress 컨트롤러가 처리할 클래스
+  ingressClassName: nginx
   rules:
-  - host: myapp.local
+  - host: linkey.co.kr
     http:
       paths:
       - path: /
