@@ -33,4 +33,4 @@ spec:
               fieldPath: metadata.namespace
         args:
         - /nginx-ingress-controller
-        - --configmap=kube-system/nginx-ingress-controller
+        - --configmap=$(POD_NAMESPACE)/nginx-ingress-controller

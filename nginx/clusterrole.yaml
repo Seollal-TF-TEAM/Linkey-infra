@@ -4,7 +4,10 @@ metadata:
   name: nginx-ingress-clusterrole
 rules:
   - apiGroups: [""]
-    resources: ["services", "endpoints", "pods", "nodes"]
+    resources: ["services", "endpoints", "pods", "nodes", "secrets"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["discovery.k8s.io"]
+    resources: ["endpointslices"]
     verbs: ["get", "list", "watch"]
   - apiGroups: ["networking.k8s.io"]
     resources: ["ingresses", "ingressclasses"]
