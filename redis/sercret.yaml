@@ -4,5 +4,5 @@ metadata:
   name: redis-secret
   namespace: default
 type: Opaque
-stringData:
-  redis-password: linkeyadmin12!
+data:
+  redis-password: bGlua2V5YWRtaW4xMiE=  # "linkeyadmin12"의 base64
