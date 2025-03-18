@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nginx-ingress
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://kubernetes.github.io/ingress-nginx  # 공식 Helm Chart 저장소
+    targetRevision: 4.10.1  # 최신 버전
+    chart: ingress-nginx
+    helm:
+      values: |
+        controller:
+          nodeSelector:
+            kubernetes.io/hostname: app-node  # 특정 노드에서 실행
+          ingressClass: nginx  # Ingress를 처리할 클래스 이름
+          watchNamespace: default  # default 네임스페이스의 Ingress 리소스만 감지
+          service:
+            type: NodePort
+            nodePorts:
+              http: 30080
+              https: 30443
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: nginx-ingress
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

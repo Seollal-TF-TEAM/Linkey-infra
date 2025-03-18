@@ -1,27 +1,27 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: app-ingress
+  name: my-ingress
   namespace: default
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$1
-    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
-  ingressClassName: nginx
+  ingressClassName: nginx  # Ingress 컨트롤러가 처리할 클래스
   rules:
-  - http:
+  - host: 192.168.1.61  # 마스터 노드 IP
+    http:
       paths:
-      - path: /api(/|$)(.*)
-        pathType: Prefix
-        backend:
-          service:
-            name: spring-boot-service
-            port:
-              number: 8080
-      - path: /(.*)
+      - path: /
         pathType: Prefix
         backend:
           service:
             name: react-service
             port:
               number: 80
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: spring-boot-service
+            port:
+              number: 8080

@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: ingress-nginx-controller
-  namespace: default
-data:
-  # 필요 시 커스텀 설정 추가
-  enable-underscores-in-headers: "true"
