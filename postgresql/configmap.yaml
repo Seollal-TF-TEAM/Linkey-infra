@@ -8,19 +8,20 @@ data:
     CREATE TABLE users (
         github_user_id BIGINT PRIMARY KEY,
         github_user_name VARCHAR(255) NOT NULL,
-        github_user_email VARCHAR(255) NOT NULL,
-        github_repos_url VARCHAR(255) NOT NULL,
+        github_user_email VARCHAR(255),
+        github_profile_url VARCHAR(255) NOT NULL,
+        github_repos_url VARCHAR(255),
         github_updated_at TIMESTAMP,
-        created_at TIMESTAMP NOT NULL,
-        updated_at TIMESTAMP NOT NULL
+        created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
     );
 
     CREATE TABLE teams (
         team_id INTEGER PRIMARY KEY,
         team_name TEXT NOT NULL,
         team_desc TEXT,
-        created_at TIMESTAMP NOT NULL,
-        updated_at TIMESTAMP NOT NULL
+        created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
     );
 
     CREATE TABLE projects (
@@ -28,8 +29,8 @@ data:
         project_name TEXT NOT NULL,
         project_desc TEXT,
         team_id INTEGER NOT NULL,
-        created_at TIMESTAMP NOT NULL,
-        updated_at TIMESTAMP NOT NULL,
+        created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (team_id) REFERENCES teams(team_id) ON DELETE CASCADE
     );
 
@@ -40,8 +41,8 @@ data:
         project_id INTEGER NOT NULL,
         sprint_start_at DATE NOT NULL,
         sprint_end_at DATE NOT NULL,
-        created_at TIMESTAMP NOT NULL,
-        updated_at TIMESTAMP NOT NULL,
+        created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (project_id) REFERENCES projects(project_id) ON DELETE CASCADE
     );
 
@@ -50,8 +51,8 @@ data:
         team_id INTEGER NOT NULL,
         member_role VARCHAR(50) NOT NULL,  -- ENUM 타입을 문자열로 처리
         github_user_id BIGINT NOT NULL,
-        created_at TIMESTAMP NOT NULL,
-        updated_at TIMESTAMP NOT NULL,
+        created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (team_id) REFERENCES teams(team_id) ON DELETE CASCADE,
         FOREIGN KEY (github_user_id) REFERENCES users(github_user_id) ON DELETE CASCADE
     );
@@ -62,8 +63,8 @@ data:
         todo_done_yn CHAR(1) NOT NULL CHECK (todo_done_yn IN ('Y', 'N')),
         sprint_id INTEGER NOT NULL,
         created_user_id BIGINT NOT NULL,
-        created_at TIMESTAMP NOT NULL,
-        updated_at TIMESTAMP NOT NULL,
+        created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (sprint_id) REFERENCES sprints(sprint_id) ON DELETE CASCADE,
         FOREIGN KEY (created_user_id) REFERENCES users(github_user_id) ON DELETE CASCADE
     );
