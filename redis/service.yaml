@@ -9,5 +9,5 @@ spec:
   ports:
   - port: 6379
     targetPort: 6379
-    nodePort: 30600
+    nodePort: 36379
   type: NodePort
