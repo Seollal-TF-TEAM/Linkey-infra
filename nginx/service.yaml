@@ -4,7 +4,7 @@ metadata:
   name: nginx-ingress-controller
   namespace: default
 spec:
-  type: NodePort
+  type: ClusterIP
   ports:
   - name: http
     port: 80
