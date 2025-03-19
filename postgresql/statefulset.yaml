@@ -20,6 +20,18 @@ spec:
       containers:
       - name: postgresql
         image: postgres:latest
+        livenessProbe:
+          exec:
+            command: ["pg_isready", "-U", "postgres"]
+          initialDelaySeconds: 5  # 시작 후 5초 후 체크 시작
+          periodSeconds: 10       # 10초마다 체크
+          failureThreshold: 3     # 3번 실패 시 재시작
+        readinessProbe:
+          exec:
+            command: ["pg_isready", "-U", "postgres"]
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          failureThreshold: 3
         ports:
         - containerPort: 5432
         env:
