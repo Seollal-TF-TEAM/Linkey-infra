@@ -5,6 +5,7 @@ metadata:
   namespace: default
 spec:
   serviceName: postgresql-service
+  revisionHistoryLimit: 1
   replicas: 1
   selector:
     matchLabels:
