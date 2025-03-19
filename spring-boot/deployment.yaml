@@ -13,6 +13,8 @@ spec:
       labels:
         app: spring-boot
     spec:
+      revisionHistoryLimit: 1
+      replicas: 1
       nodeSelector:
         app-node: "true"
       containers:
