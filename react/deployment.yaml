@@ -17,7 +17,7 @@ spec:
         app-node: "true"
       containers:
       - name: react
-        image: nahongc/react-app:latest
+        image: linkeydockerhub/react-app:40733f0
         ports:
         - containerPort: 80
         resources:
