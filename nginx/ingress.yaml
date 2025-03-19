@@ -8,7 +8,12 @@ metadata:
       nginx.ingress.kubernetes.io/ssl-redirect: "true"
       nginx.ingress.kubernetes.io/hsts: "true"
       nginx.ingress.kubernetes.io/hsts-max-age: "31536000"
-  #   nginx.ingress.kubernetes.io/rewrite-target: /
+      nginx.ingress.kubernetes.io/rewrite-target: /
+      nginx.ingress.kubernetes.io/use-regex: "true"
+      nginx.ingress.kubernetes.io/configuration-snippet: |
+        rewrite ^/(.*)/$ /$1 break;
+        rewrite ^/(.*)$ /$1 break;
+        rewrite ^/$ /index.html break;
 spec:
   ingressClassName: nginx
   tls:
