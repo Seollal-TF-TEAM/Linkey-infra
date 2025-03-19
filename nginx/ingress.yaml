@@ -3,10 +3,18 @@ kind: Ingress
 metadata:
   name: nginx-ingress
   namespace: default
-  # annotations:
+  annotations:
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/hsts: "true"
+      nginx.ingress.kubernetes.io/hsts-max-age: "31536000"
   #   nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
+  tls:
+    - hosts:
+      - linkey.co.kr
+      secretName: linkey-tls
   rules:
   - host: linkey.co.kr
     http:
