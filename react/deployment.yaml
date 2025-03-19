@@ -4,6 +4,7 @@ metadata:
   name: react-deployment
   namespace: default
 spec:
+  revisionHistoryLimit: 1
   replicas: 1
   selector:
     matchLabels:
