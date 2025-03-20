@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: postgresql-config
-  namespace: default
+  namespace: ns-postgresql
 data:
   init.sql: |
     CREATE TABLE users (

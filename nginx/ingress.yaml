@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: nginx-ingress
-  namespace: default
+  namespace: ns-nginx
   annotations:
       nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
       nginx.ingress.kubernetes.io/ssl-redirect: "true"
@@ -23,6 +23,7 @@ spec:
         backend:
           service:
             name: react-service
+            namespace: ns-react
             port:
               number: 80
       - path: /api
@@ -30,5 +31,6 @@ spec:
         backend:
           service:
             name: spring-boot-service
+            namespace: ns-spring-boot
             port:
               number: 8080

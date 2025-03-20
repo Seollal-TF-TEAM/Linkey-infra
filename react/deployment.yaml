@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: react-deployment
-  namespace: default
+  namespace: ns-react
 spec:
   revisionHistoryLimit: 1
   replicas: 1

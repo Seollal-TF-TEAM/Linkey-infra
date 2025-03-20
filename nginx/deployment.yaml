@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx-ingress-controller
-  namespace: default
+  namespace: ns-nginx
 spec:
   revisionHistoryLimit: 1
   replicas: 1
