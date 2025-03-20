@@ -29,19 +29,16 @@ spec:
             secretKeyRef:
               name: postgresql-secret
               key: dbname
-              optional: true
         - name: SPRING_DATASOURCE_USERNAME
           valueFrom:
             secretKeyRef:
                 name: postgresql-secret
                 key: username
-                optional: true
         - name: SPRING_DATASOURCE_PASSWORD
           valueFrom:
             secretKeyRef:
               name: postgresql-secret
               key: password
-              optional: true
         resources:
           limits:
             cpu: "1"
