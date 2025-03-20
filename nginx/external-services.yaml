@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: react-service
+  namespace: ns-nginx  # ⬅ Ingress가 있는 네임스페이스
+spec:
+  type: ExternalName
+  externalName: react-service.ns-react.svc.cluster.local  # ⬅ 원래 react 서비스의 FQDN
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-boot-service
+  namespace: ns-nginx
+spec:
+  type: ExternalName
+  externalName: spring-boot-service.ns-spring-boot.svc.cluster.local
