@@ -39,7 +39,8 @@ spec:
           - sh
           - -c
           - |
-            sed "s/%USERNAME%/$REDIS_USERNAME/; s/%PASSWORD%/$REDIS_PASSWORD/" /etc/redis/redis.acl > /tmp/redis.acl && \
+            envsubst < /etc/redis/redis.acl > /tmp/redis.acl && \
+            cat /tmp/redis.acl && \
             redis-server --aclfile /tmp/redis.acl
       volumes:  
       - name: redis-config  
