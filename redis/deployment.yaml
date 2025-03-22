@@ -39,7 +39,7 @@ spec:
           - sh
           - -c
           - |
-            envsubst < /etc/redis/redis.acl > /tmp/redis.acl && \
+            sed "s|%USERNAME%|${REDIS_USERNAME}|g; s|%PASSWORD%|${REDIS_PASSWORD}|g" /etc/redis/redis.acl > /tmp/redis.acl && \
             cat /tmp/redis.acl && \
             redis-server --aclfile /tmp/redis.acl
       volumes:  
