@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-config
+  namespace: ns-redis
+data:
+  redis.acl: |
+    user default off  # 기본 사용자 비활성화
+    user ${REDIS_USERNAME} on >${REDIS_PASSWORD} ~* +@all
