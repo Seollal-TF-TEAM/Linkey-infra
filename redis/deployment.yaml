@@ -21,28 +21,3 @@ spec:
         image: redis:latest
         ports:
         - containerPort: 6379
-        env:
-        - name: REDIS_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: redis-secret
-              key: password
-        - name: REDIS_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: redis-secret
-              key: username
-        volumeMounts:
-        - name: redis-config
-          mountPath: /etc/redis
-        command:
-          - sh
-          - -c
-          - |
-            sed "s|%USERNAME%|${REDIS_USERNAME}|g; s|%PASSWORD%|${REDIS_PASSWORD}|g" /etc/redis/redis.acl > /tmp/redis.acl && \
-            cat /tmp/redis.acl && \
-            redis-server --aclfile /tmp/redis.acl
-      volumes:  
-      - name: redis-config  
-        configMap:
-          name: redis-config
