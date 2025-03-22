@@ -6,4 +6,4 @@ metadata:
 data:
   redis.acl: |
     user default off  # 기본 사용자 비활성화
-    user ${REDIS_USERNAME} on >${REDIS_PASSWORD} ~* +@all
+    user %USERNAME% on >%PASSWORD% ~* +@all

@@ -36,9 +36,11 @@ spec:
         - name: redis-config
           mountPath: /etc/redis
         command:
-        - redis-server
-        - --aclfile
-        - /etc/redis/redis.acl
+          - sh
+          - -c
+          - |
+            sed "s/%USERNAME%/$REDIS_USERNAME/; s/%PASSWORD%/$REDIS_PASSWORD/" /etc/redis/redis.acl > /tmp/redis.acl && \
+            redis-server --aclfile /tmp/redis.acl
       volumes:  
       - name: redis-config  
         configMap:
