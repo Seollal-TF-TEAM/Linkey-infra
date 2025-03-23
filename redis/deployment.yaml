@@ -27,4 +27,5 @@ spec:
             secretKeyRef:
               name: redis-secret
               key: password
-        command: ["redis-sever", "--requirepass", "$(REDIS_PASSWORD)"]
+        command: ["redis-server", "--requirepass", "$(REDIS_PASSWORD)"]
+
