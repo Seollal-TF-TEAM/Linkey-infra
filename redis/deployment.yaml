@@ -21,3 +21,10 @@ spec:
         image: redis:latest
         ports:
         - containerPort: 6379
+        env:
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: redis-secret
+              key: password
+        command: ["redis-sever", "--requirepass", "$(REDIS_PASSWORD)"]
