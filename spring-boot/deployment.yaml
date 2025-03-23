@@ -22,23 +22,34 @@ spec:
         ports:
         - containerPort: 8080
         env:
-        - name: SPRING_DATASOURCE_URL
+        # postgresql 연결 정보
+        - name: POSTGRESQL_URL
           value: "jdbc:postgresql://postgresql-service.ns-postgresql.svc.cluster.local:5432/${POSTGRES_DB}"
         - name: POSTGRES_DB
           valueFrom:
             secretKeyRef:
-              name: postgresql-secret
-              key: dbname
-        - name: SPRING_DATASOURCE_USERNAME
+              name: spring-boot-secrets
+              key: postgresql_dbname
+        - name: POSTGRESQL_USERNAME
           valueFrom:
             secretKeyRef:
-                name: postgresql-secret
-                key: username
-        - name: SPRING_DATASOURCE_PASSWORD
+                name: spring-boot-secrets
+                key: postgresql_username
+        - name: POSTGRESQL_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: postgresql-secret
-              key: password
+              name: spring-boot-secrets
+              key: postgresql_password
+        # redis 연결 정보
+        - name: REDIS_HOST
+          value: "redis-service.ns-redis.svc.cluster.local"
+        - name: REDIS_PORT
+          value: "6379"
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: spring-boot-secrets
+              key: redis_password
         resources:
           limits:
             cpu: "1"
