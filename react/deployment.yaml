@@ -17,14 +17,14 @@ spec:
       nodeSelector:
         app-node: "true"
       containers:
-      - name: react
-        image: linkeydockerhub/react-app:f538ecb
-        ports:
-        - containerPort: 80
-        resources:
-          limits:
-            cpu: "0.5"
-            memory: "512Mi"
-          requests:
-            cpu: "0.2"
-            memory: "256Mi"
+        - name: react
+          image: linkeydockerhub/react-app:04e3ea4
+          ports:
+            - containerPort: 80
+          resources:
+            limits:
+              cpu: "0.5"
+              memory: "512Mi"
+            requests:
+              cpu: "0.2"
+              memory: "256Mi"
