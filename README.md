@@ -14,7 +14,7 @@
 
 ## 🏛 **아키텍처**  
 
-![Image](https://github.com/user-attachments/assets/271caa54-f9f4-4253-ac8d-f1f951b2000a)
+![Image](./img/Linkey_Dev_Infra.png)
 
 # 🛠 **환경 구성**  
 
