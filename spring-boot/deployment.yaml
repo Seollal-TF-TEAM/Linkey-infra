@@ -67,6 +67,9 @@ spec:
             # hibernate dll 설정
             - name: HIBERNATE_DDL_AUTO
               value: "update"
+          volumeMounts:
+            - name: nas-volume
+              mountPath: /app/photos
           resources:
             limits:
               cpu: "1"
@@ -75,6 +78,6 @@ spec:
               cpu: "0.5"
               memory: "512Mi"
       volumes:
-        - name: photo-volume
-          hostPath:
-            path: /mnt/nas
+        - name: nas-volume
+          persistentVolumeClaim:
+            claimName: nas-pvc
