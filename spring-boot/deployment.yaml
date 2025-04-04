@@ -18,7 +18,7 @@ spec:
         app-node: "true"
       containers:
         - name: spring-boot
-          image: linkeydockerhub/spring-boot-app:394121f
+          image: linkeydockerhub/spring-boot-app:f8cc72f
           ports:
             - containerPort: 8080
           env:
