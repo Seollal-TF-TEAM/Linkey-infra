@@ -17,32 +17,67 @@ spec:
       nodeSelector:
         app-node: "true"
       containers:
-      - name: spring-boot
-        image: linkeydockerhub/spring-boot-app:1f0d27a
-        ports:
-        - containerPort: 8080
-        env:
-        - name: SPRING_DATASOURCE_URL
-          value: "jdbc:postgresql://postgresql-service.ns-postgresql.svc.cluster.local:5432/${POSTGRES_DB}"
-        - name: POSTGRES_DB
-          valueFrom:
-            secretKeyRef:
-              name: postgresql-secret
-              key: dbname
-        - name: SPRING_DATASOURCE_USERNAME
-          valueFrom:
-            secretKeyRef:
-                name: postgresql-secret
-                key: username
-        - name: SPRING_DATASOURCE_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: postgresql-secret
-              key: password
-        resources:
-          limits:
-            cpu: "1"
-            memory: "1Gi"
-          requests:
-            cpu: "0.5"
-            memory: "512Mi"
+        - name: spring-boot
+          image: linkeydockerhub/spring-boot-app:2c384a9
+          ports:
+            - containerPort: 8080
+          env:
+            # postgresql 연결 정보
+            - name: POSTGRESQL_URL
+              value: "jdbc:postgresql://postgresql-service.ns-postgresql.svc.cluster.local:5432/${POSTGRES_DB}"
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: spring-boot-secrets
+                  key: postgresql_dbname
+            - name: POSTGRESQL_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: spring-boot-secrets
+                  key: postgresql_username
+            - name: POSTGRESQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: spring-boot-secrets
+                  key: postgresql_password
+            # redis 연결 정보
+            - name: REDIS_HOST
+              value: "redis-service.ns-redis.svc.cluster.local"
+            - name: REDIS_PORT
+              value: "6379"
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: spring-boot-secrets
+                  key: redis_password
+            # github app client 연결정보
+            - name: GITHUB_APP_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: spring-boot-secrets
+                  key: github_app_client_id
+            - name: GITHUB_APP_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: spring-boot-secrets
+                  key: github_app_client_secret
+            # base_url 정보
+            - name: BASE_URL
+              value: "https://linkey.co.kr"
+            # hibernate dll 설정
+            - name: HIBERNATE_DDL_AUTO
+              value: "update"
+          volumeMounts:
+            - name: nas-volume
+              mountPath: /app/photos
+          resources:
+            limits:
+              cpu: "1"
+              memory: "1Gi"
+            requests:
+              cpu: "0.5"
+              memory: "512Mi"
+      volumes:
+        - name: nas-volume
+          persistentVolumeClaim:
+            claimName: nas-pvc
