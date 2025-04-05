@@ -61,8 +61,8 @@ spec:
                 secretKeyRef:
                   name: spring-boot-secrets
                   key: github_app_client_secret
-            # cors allowed 정보
-            - name: CORS_ALLOWED_ORIGINS
+            # base_url 정보
+            - name: BASE_URL
               value: "https://linkey.co.kr"
             # hibernate dll 설정
             - name: HIBERNATE_DDL_AUTO
